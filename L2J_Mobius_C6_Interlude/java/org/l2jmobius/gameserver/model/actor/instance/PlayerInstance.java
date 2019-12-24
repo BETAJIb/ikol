@@ -128,8 +128,6 @@ import org.l2jmobius.gameserver.model.actor.stat.PlayerStat;
 import org.l2jmobius.gameserver.model.actor.status.PlayerStatus;
 import org.l2jmobius.gameserver.model.actor.templates.PlayerTemplate;
 import org.l2jmobius.gameserver.model.base.ClassId;
-import org.l2jmobius.gameserver.model.base.ClassLevel;
-import org.l2jmobius.gameserver.model.base.PlayerClass;
 import org.l2jmobius.gameserver.model.base.SubClass;
 import org.l2jmobius.gameserver.model.clan.Clan;
 import org.l2jmobius.gameserver.model.clan.ClanMember;
@@ -2969,11 +2967,11 @@ public class PlayerInstance extends Playable
 	/**
 	 * Set the template of the PlayerInstance.<BR>
 	 * <BR>
-	 * @param Id The Identifier of the PlayerTemplate to set to the PlayerInstance
+	 * @param id The Identifier of the PlayerTemplate to set to the PlayerInstance
 	 */
-	public void setClassId(int Id)
+	public void setClassId(int id)
 	{
-		if ((getLvlJoinedAcademy() != 0) && (_clan != null) && (PlayerClass.values()[Id].getLevel() == ClassLevel.THIRD))
+		if ((getLvlJoinedAcademy() != 0) && (_clan != null) && (ClassId.getClassId(id).level() == 2))
 		{
 			if (getLvlJoinedAcademy() <= 16)
 			{
@@ -2991,7 +2989,7 @@ public class PlayerInstance extends Playable
 			_clan.broadcastToOnlineMembers(new PledgeShowInfoUpdate(_clan));
 			setLvlJoinedAcademy(0);
 			// oust pledge member from the academy, cuz he has finished his 2nd class transfer
-			SystemMessage msg = new SystemMessage(SystemMessageId.CLAN_MEMBER_S1_EXPELLED);
+			final SystemMessage msg = new SystemMessage(SystemMessageId.CLAN_MEMBER_S1_EXPELLED);
 			msg.addString(getName());
 			_clan.broadcastToOnlineMembers(msg);
 			_clan.broadcastToOnlineMembers(new PledgeShowMemberListDelete(getName()));
@@ -3004,10 +3002,10 @@ public class PlayerInstance extends Playable
 		}
 		if (isSubClassActive())
 		{
-			getSubClasses().get(_classIndex).setClassId(Id);
+			getSubClasses().get(_classIndex).setClassId(id);
 		}
 		doCast(SkillTable.getInstance().getInfo(5103, 1));
-		setClassTemplate(Id);
+		setClassTemplate(id);
 	}
 	
 	/**

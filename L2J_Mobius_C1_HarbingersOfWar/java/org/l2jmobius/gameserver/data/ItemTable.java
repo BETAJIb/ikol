@@ -186,9 +186,9 @@ public class ItemTable
 	
 	private void fixEtcItems(HashMap<Integer, Item> items)
 	{
-		for (int key : items.keySet())
+		for (Item i : items.values())
 		{
-			final EtcItem item = (EtcItem) items.get(key);
+			final EtcItem item = (EtcItem) i;
 			if ((item.getWeight() == 0) && (item.getEtcItemType() != EtcItem.TYPE_MONEY) && !item.getName().startsWith("world_map") && !item.getName().startsWith("crystal_"))
 			{
 				item.setType2(Item.TYPE2_QUEST);
@@ -276,7 +276,7 @@ public class ItemTable
 			final StringTokenizer st = new StringTokenizer(line, ";");
 			result.setItemId(Integer.parseInt(st.nextToken()));
 			result.setName(st.nextToken());
-			result.setCrystallizable(Boolean.valueOf(st.nextToken()));
+			result.setCrystallizable(Boolean.parseBoolean(st.nextToken()));
 			final String itemType = st.nextToken();
 			result.setType1(Item.TYPE1_ITEM_QUESTITEM_ADENA);
 			if (itemType.equals("none"))
@@ -359,7 +359,7 @@ public class ItemTable
 			result.setName(st.nextToken());
 			final Integer bodyPart = _slots.get(st.nextToken());
 			result.setBodyPart(bodyPart);
-			result.setCrystallizable(Boolean.valueOf(st.nextToken()));
+			result.setCrystallizable(Boolean.parseBoolean(st.nextToken()));
 			final Integer armor = _armorTypes.get(st.nextToken());
 			result.setArmorType(armor);
 			final int slot = result.getBodyPart();
@@ -403,7 +403,7 @@ public class ItemTable
 			result.setType2(Item.TYPE2_WEAPON);
 			final Integer bodyPart = _slots.get(st.nextToken());
 			result.setBodyPart(bodyPart);
-			result.setCrystallizable(Boolean.valueOf(st.nextToken()));
+			result.setCrystallizable(Boolean.parseBoolean(st.nextToken()));
 			result.setWeight(Integer.parseInt(st.nextToken()));
 			result.setSoulShotCount(Integer.parseInt(st.nextToken()));
 			result.setSpiritShotCount(Integer.parseInt(st.nextToken()));

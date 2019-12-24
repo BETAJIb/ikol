@@ -33,7 +33,7 @@ import org.l2jmobius.gameserver.network.serverpackets.SystemMessage;
 
 public class RequestBuyItem extends ClientBasePacket
 {
-	final static Logger _log = Logger.getLogger(RequestBuyItem.class.getName());
+	private static final Logger _log = Logger.getLogger(RequestBuyItem.class.getName());
 	
 	public RequestBuyItem(byte[] decrypt, ClientThread client)
 	{
@@ -53,22 +53,25 @@ public class RequestBuyItem extends ClientBasePacket
 		final PlayerInstance player = client.getActiveChar();
 		
 		// Prevent buying items far from merchant.
-		if (!(player.getTarget() instanceof MerchantInstance))
+		if (!player.isGM())
 		{
-			return;
-		}
-		boolean found = false;
-		for (WorldObject object : player.getKnownObjects())
-		{
-			if ((object instanceof MerchantInstance) && (player.calculateDistance2D(object) < 250))
+			if (!(player.getTarget() instanceof MerchantInstance))
 			{
-				found = true;
-				break;
+				return;
 			}
-		}
-		if (!found)
-		{
-			return;
+			boolean found = false;
+			for (WorldObject object : player.getKnownObjects())
+			{
+				if ((object instanceof MerchantInstance) && (player.calculateDistance2D(object) < 250))
+				{
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				return;
+			}
 		}
 		
 		double neededMoney = 0;

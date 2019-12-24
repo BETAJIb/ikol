@@ -138,8 +138,7 @@ public class PlayerInstance extends Creature
 	
 	public Skill addSkill(Skill newSkill)
 	{
-		final Skill oldSkill = _skills.put(newSkill.getId(), newSkill);
-		return oldSkill;
+		return _skills.put(newSkill.getId(), newSkill);
 	}
 	
 	public Skill removeSkill(Skill skill)
@@ -720,6 +719,7 @@ public class PlayerInstance extends Creature
 				case CASTING:
 				{
 					useMagic(_skill);
+					break; // Use a fallthrou?
 				}
 				case INTERACT:
 				{
@@ -765,8 +765,7 @@ public class PlayerInstance extends Creature
 		final StopMove sm = new StopMove(getObjectId(), getX(), getY(), getZ(), getHeading());
 		sendPacket(sm);
 		boolean pickupOk = false;
-		final ItemInstance ItemInstance = target;
-		synchronized (ItemInstance)
+		synchronized (target)
 		{
 			if (target.isOnTheGround())
 			{
@@ -844,7 +843,7 @@ public class PlayerInstance extends Creature
 				((Creature) oldTarget).removeStatusListener(this);
 			}
 		}
-		if ((newTarget != null) && (newTarget instanceof Creature))
+		if (newTarget instanceof Creature)
 		{
 			((Creature) newTarget).addStatusListener(this);
 		}
@@ -1366,10 +1365,10 @@ public class PlayerInstance extends Creature
 		Armor armorPiece;
 		final double lvlBonus = (89.0 + getLevel()) / 100.0;
 		final StatModifiers modifier = CharStatsTable.getInstance().getTemplate(getClassId());
-		double MENbonus = 1.0;
+		double menBonus = 1.0;
 		if (modifier != null)
 		{
-			MENbonus = (100.0 + modifier.getModmen()) / 100.0;
+			menBonus = (100.0 + modifier.getModmen()) / 100.0;
 		}
 		else
 		{
@@ -1411,7 +1410,7 @@ public class PlayerInstance extends Creature
 			armorPiece = (Armor) dummy.getItem();
 			totalItemDef += armorPiece.getMDef();
 		}
-		final double mDef = totalItemDef * lvlBonus * MENbonus;
+		final double mDef = totalItemDef * lvlBonus * menBonus;
 		setMagicalDefense((int) Math.round(mDef));
 	}
 	
@@ -1824,8 +1823,10 @@ public class PlayerInstance extends Creature
 				|| ((regionX == 19) && (regionY == 23)) // Wastelands - Ant Nest
 				|| ((regionX == 19) && (regionY == 24)) // Wastelands - Southern Entrance
 				|| ((regionX == 20) && (regionY == 18)) // Dark Elf Village
+				|| ((regionX == 20) && (regionY == 20)) // Elven Fortress
 				|| ((regionX == 20) && (regionY == 21)) // Cruma Tower
 				|| ((regionX == 21) && (regionY == 18)) // Sea of Spores
+				|| ((regionX == 21) && (regionY == 25)) // Elven Ruins
 				|| ((regionX == 22) && (regionY == 18)) // Ivory Tower
 				|| ((regionX == 24) && (regionY == 21)) // Lair of Antharas
 				|| ((regionX == 25) && (regionY == 12)) // Mithril Mines

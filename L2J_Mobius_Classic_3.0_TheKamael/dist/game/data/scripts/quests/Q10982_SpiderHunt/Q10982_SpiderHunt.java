@@ -149,8 +149,8 @@ public class Q10982_SpiderHunt extends Quest
 					player.sendPacket(new ExShowScreenMessage("Completed the tutorial.#Now try the first class transfer and as instructed by Bathis carry out the Adventurers Journey misions to grow your character.", 5000));
 					qs.exitQuest(false, true);
 					htmltext = event;
-					break;
 				}
+				break;
 			}
 			case "LightArmor.html":
 			{
@@ -168,8 +168,8 @@ public class Q10982_SpiderHunt extends Quest
 					player.sendPacket(new ExShowScreenMessage("Completed the tutorial.#Now try the first class transfer and as instructed by Bathis carry out the Adventurers Journey misions to grow your character.", 5000));
 					qs.exitQuest(false, true);
 					htmltext = event;
-					break;
 				}
+				break;
 			}
 			case "Robe.html":
 			{
@@ -187,8 +187,8 @@ public class Q10982_SpiderHunt extends Quest
 					player.sendPacket(new ExShowScreenMessage("Completed the tutorial.#Now try the first class transfer and as instructed by Bathis carry out the Adventurers Journey misions to grow your character.", 5000));
 					qs.exitQuest(false, true);
 					htmltext = event;
-					break;
 				}
+				break;
 			}
 		}
 		return htmltext;

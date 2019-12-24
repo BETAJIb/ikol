@@ -53,7 +53,7 @@ public class ExBuySellList implements IClientOutgoingPacket
 			}
 			_buyList.add(item);
 		}
-		_sellList = player.getInventory().getAvailableItems(true, false, false);
+		_sellList = player.getInventory().getAvailableItems(false, false, false);
 		if (player.hasRefund())
 		{
 			_refundList = player.getRefund().getItems();

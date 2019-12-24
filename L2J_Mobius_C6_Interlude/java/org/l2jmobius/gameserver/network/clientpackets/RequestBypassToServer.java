@@ -240,9 +240,9 @@ public class RequestBypassToServer extends GameClientPacket
 						GameEvent.inscribePlayer(player);
 					}
 					
-					else if ((Config.ALLOW_CLASS_MASTERS && Config.ALLOW_REMOTE_CLASS_MASTERS && (object instanceof ClassMasterInstance)) || ((object instanceof NpcInstance) && (endOfId > 0) && player.isInsideRadius(object, NpcInstance.INTERACTION_DISTANCE, false, false)))
+					if ((Config.ALLOW_CLASS_MASTERS && Config.ALLOW_REMOTE_CLASS_MASTERS && (object instanceof ClassMasterInstance)) || ((object instanceof NpcInstance) && (endOfId > 0) && player.isInsideRadius(object, NpcInstance.INTERACTION_DISTANCE, false, false)))
 					{
-						((NpcInstance) object).onBypassFeedback(player, _command.substring(endOfId + 1));
+						((NpcInstance) object).onBypassFeedback(player, _command.replace("npc_" + object.getObjectId() + "_", ""));
 					}
 					
 					player.sendPacket(ActionFailed.STATIC_PACKET);

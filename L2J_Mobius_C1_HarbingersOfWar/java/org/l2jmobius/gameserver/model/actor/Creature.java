@@ -119,7 +119,7 @@ public abstract class Creature extends WorldObject
 	private boolean _2ndHit = false;
 	private boolean _currentlyAttacking = false;
 	private WorldObject _attackTarget;
-	protected String title;
+	protected String _title;
 	
 	public boolean knownsObject(WorldObject object)
 	{
@@ -407,7 +407,6 @@ public abstract class Creature extends WorldObject
 			try
 			{
 				player.sendPacket(su);
-				continue;
 			}
 			catch (Exception e1)
 			{
@@ -703,12 +702,12 @@ public abstract class Creature extends WorldObject
 	
 	public String getTitle()
 	{
-		return title;
+		return _title;
 	}
 	
 	public void setTitle(String title)
 	{
-		this.title = title;
+		_title = title;
 	}
 	
 	public int getRunSpeed()
@@ -879,7 +878,6 @@ public abstract class Creature extends WorldObject
 		{
 			sendPacket(new ActionFailed());
 			onTargetReached();
-			return;
 		}
 	}
 	
@@ -1519,10 +1517,7 @@ public abstract class Creature extends WorldObject
 		setX(x);
 		setY(y);
 		setZ(z);
-		ThreadPool.schedule(() ->
-		{
-			World.getInstance().addVisibleObject(this);
-		}, 2000);
+		ThreadPool.schedule(() -> World.getInstance().addVisibleObject(this), 2000);
 	}
 	
 	@Override
